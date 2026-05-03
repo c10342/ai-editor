@@ -1,4 +1,4 @@
-import BulletList from '@tiptap/extension-bullet-list';
+﻿import BulletList from '@tiptap/extension-bullet-list';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createBulletListPlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '无序列表';
+      btn.title = editorManager.t('toolbar.bulletList');
       btn.appendChild(getIconElement('bullet-list'));
       const updateState = () => {
         const editor = editorManager.getEditor();

@@ -1,4 +1,4 @@
-import Strike from '@tiptap/extension-strike';
+﻿import Strike from '@tiptap/extension-strike';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createStrikePlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '删除线 (Ctrl+Shift+S)';
+      btn.title = editorManager.t('toolbar.strike');
       btn.appendChild(getIconElement('strikethrough'));
 
       const updateState = () => {

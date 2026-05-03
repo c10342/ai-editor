@@ -1,4 +1,4 @@
-import Bold from '@tiptap/extension-bold';
+﻿import Bold from '@tiptap/extension-bold';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createBoldPlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '加粗 (Ctrl+B)';
+      btn.title = editorManager.t('toolbar.bold');
       btn.appendChild(getIconElement('bold'));
 
       const updateState = () => {

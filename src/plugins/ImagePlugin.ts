@@ -1,4 +1,4 @@
-import Image from '@tiptap/extension-image';
+﻿import Image from '@tiptap/extension-image';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createImagePlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '插入图片';
+      btn.title = editorManager.t('toolbar.image');
       btn.appendChild(getIconElement('image'));
       btn.addEventListener('click', () => showImageModal(editorManager));
       return btn;
@@ -26,18 +26,18 @@ function showImageModal(editorManager: any) {
   modal.classList.add('ae-link-modal__dialog');
   const title = document.createElement('div');
   title.classList.add('ae-link-modal__title');
-  title.textContent = '插入图片';
+  title.textContent = editorManager.t('image.modal.title');
   const urlInput = document.createElement('input');
   urlInput.classList.add('ae-link-modal__input');
   urlInput.type = 'url';
-  urlInput.placeholder = '请输入图片地址 (https://...)';
+  urlInput.placeholder = editorManager.t('image.modal.urlPlaceholder');
   const altInput = document.createElement('input');
   altInput.classList.add('ae-link-modal__input');
   altInput.type = 'text';
-  altInput.placeholder = '图片描述 (alt)';
+  altInput.placeholder = editorManager.t('image.modal.altPlaceholder');
   const fileLabel = document.createElement('label');
   fileLabel.classList.add('ae-link-modal__file-label');
-  fileLabel.textContent = '或选择本地文件';
+  fileLabel.textContent = editorManager.t('image.modal.fileLabel');
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
   fileInput.accept = 'image/*';
@@ -51,11 +51,11 @@ function showImageModal(editorManager: any) {
   btnGroup.classList.add('ae-link-modal__actions');
   const cancelBtn = document.createElement('button');
   cancelBtn.classList.add('ae-link-modal__btn', 'ae-link-modal__btn--cancel');
-  cancelBtn.textContent = '取消';
+  cancelBtn.textContent = editorManager.t('image.modal.cancel');
   cancelBtn.addEventListener('click', () => { overlay.remove(); });
   const confirmBtn = document.createElement('button');
   confirmBtn.classList.add('ae-link-modal__btn', 'ae-link-modal__btn--confirm');
-  confirmBtn.textContent = '插入';
+  confirmBtn.textContent = editorManager.t('image.modal.confirm');
   confirmBtn.addEventListener('click', () => {
     const url = urlInput.value.trim();
     const alt = altInput.value.trim();

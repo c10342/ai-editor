@@ -1,4 +1,4 @@
-import type { EditorPlugin } from '@/types';
+﻿import type { EditorPlugin } from '@/types';
 
 import { createBoldPlugin } from './BoldPlugin';
 import { createItalicPlugin } from './ItalicPlugin';

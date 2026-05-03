@@ -1,4 +1,4 @@
-import FontFamily from '@tiptap/extension-font-family';
+﻿import FontFamily from '@tiptap/extension-font-family';
 import type { EditorPlugin } from '@/types';
 
 export function createFontFamilyPlugin(): EditorPlugin {
@@ -10,12 +10,12 @@ export function createFontFamilyPlugin(): EditorPlugin {
       wrapper.classList.add('ae-toolbar__dropdown');
       const trigger = document.createElement('button');
       trigger.classList.add('ae-toolbar__btn', 'ae-toolbar__btn--dropdown');
-      trigger.title = '字体';
-      trigger.innerHTML = '<span class="ae-toolbar__btn-label">默认字体</span>';
+      trigger.title = editorManager.t('toolbar.fontFamily');
+      trigger.innerHTML = `<span class="ae-toolbar__btn-label">${editorManager.t('toolbar.fontFamily.default')}</span>`;
       const menu = document.createElement('div');
       menu.classList.add('ae-toolbar__dropdown-menu');
       const fonts = [
-        { label: '默认字体', value: '' },
+        { label: editorManager.t('toolbar.fontFamily.default'), value: '' },
         { label: '宋体', value: 'SimSun, serif' },
         { label: '黑体', value: 'SimHei, sans-serif' },
         { label: '微软雅黑', value: 'Microsoft YaHei, sans-serif' },

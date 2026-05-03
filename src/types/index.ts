@@ -2,6 +2,8 @@ import type { Extension } from '@tiptap/core';
 
 export type TiptapExtension = Extension;
 
+export type Locale = 'zh-CN' | 'en' | 'zh-TW';
+
 export type ToolbarItemType =
   | 'button'
   | 'dropdown'
@@ -49,6 +51,8 @@ export interface EditorOptions {
   plugins?: EditorPlugin[];
   toolbar?: string[] | false;
   pluginOptions?: Record<string, any>;
+  lang?: Locale;
+  messages?: Record<Locale, Record<string, string>>;
 }
 
 export interface EditorEventMap {

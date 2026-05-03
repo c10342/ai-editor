@@ -1,4 +1,4 @@
-import Superscript from '@tiptap/extension-superscript';
+﻿import Superscript from '@tiptap/extension-superscript';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createSuperscriptPlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '上标';
+      btn.title = editorManager.t('toolbar.superscript');
       btn.appendChild(getIconElement('superscript'));
       const updateState = () => {
         const editor = editorManager.getEditor();

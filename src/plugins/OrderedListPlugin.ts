@@ -1,4 +1,4 @@
-import OrderedList from '@tiptap/extension-ordered-list';
+﻿import OrderedList from '@tiptap/extension-ordered-list';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createOrderedListPlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '有序列表';
+      btn.title = editorManager.t('toolbar.orderedList');
       btn.appendChild(getIconElement('ordered-list'));
       const updateState = () => {
         const editor = editorManager.getEditor();

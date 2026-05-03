@@ -1,4 +1,4 @@
-import Document from '@tiptap/extension-document';
+﻿import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
 import ListItem from '@tiptap/extension-list-item';

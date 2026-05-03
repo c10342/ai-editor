@@ -1,4 +1,4 @@
-import Subscript from '@tiptap/extension-subscript';
+﻿import Subscript from '@tiptap/extension-subscript';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createSubscriptPlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '下标';
+      btn.title = editorManager.t('toolbar.subscript');
       btn.appendChild(getIconElement('subscript'));
       const updateState = () => {
         const editor = editorManager.getEditor();

@@ -1,12 +1,14 @@
 import { Editor, type Content } from '@tiptap/core';
 import { EventEmitter } from './EventEmitter';
 import { ExtensionManager } from './ExtensionManager';
-import type { EditorOptions, EditorEventType, EditorEventCallback } from '@/types';
+import { I18n } from './I18n';
+import type { EditorOptions, EditorEventType, EditorEventCallback, Locale } from '@/types';
 
 export class EditorManager {
   private editor: Editor | null = null;
   private emitter: EventEmitter;
   private extensionManager: ExtensionManager;
+  private i18n: I18n;
   private containerEl: HTMLElement;
   private editorEl: HTMLElement;
   private options: EditorOptions;
@@ -15,6 +17,12 @@ export class EditorManager {
     this.options = options;
     this.emitter = new EventEmitter();
     this.extensionManager = new ExtensionManager();
+    this.i18n = new I18n(options.lang || 'zh-CN');
+    if (options.messages) {
+      for (const [locale, msgs] of Object.entries(options.messages)) {
+        this.i18n.addMessages(locale as Locale, msgs);
+      }
+    }
     this.containerEl = options.element;
     this.editorEl = document.createElement('div');
     this.editorEl.classList.add('ae-editor__content');
@@ -26,6 +34,14 @@ export class EditorManager {
 
   getEditor(): Editor | null {
     return this.editor;
+  }
+
+  getI18n(): I18n {
+    return this.i18n;
+  }
+
+  t(key: string, params?: Record<string, string | number>): string {
+    return this.i18n.t(key, params);
   }
 
   getContainerElement(): HTMLElement {

@@ -1,4 +1,4 @@
-import Blockquote from '@tiptap/extension-blockquote';
+﻿import Blockquote from '@tiptap/extension-blockquote';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createBlockquotePlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '引用';
+      btn.title = editorManager.t('toolbar.blockquote');
       btn.appendChild(getIconElement('quote'));
       const updateState = () => {
         const editor = editorManager.getEditor();

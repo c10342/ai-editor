@@ -1,4 +1,4 @@
-import TextAlign from '@tiptap/extension-text-align';
+﻿import TextAlign from '@tiptap/extension-text-align';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -10,15 +10,15 @@ export function createTextAlignPlugin(): EditorPlugin {
       const group = document.createElement('div');
       group.classList.add('ae-toolbar__group');
       const alignments = [
-        { value: 'left', icon: 'text-align-left', title: '左对齐' },
-        { value: 'center', icon: 'text-align-center', title: '居中' },
-        { value: 'right', icon: 'text-align-right', title: '右对齐' },
-        { value: 'justify', icon: 'text-align-justify', title: '两端对齐' },
+        { value: 'left', icon: 'text-align-left', titleKey: 'toolbar.textAlign.left' },
+        { value: 'center', icon: 'text-align-center', titleKey: 'toolbar.textAlign.center' },
+        { value: 'right', icon: 'text-align-right', titleKey: 'toolbar.textAlign.right' },
+        { value: 'justify', icon: 'text-align-justify', titleKey: 'toolbar.textAlign.justify' },
       ];
-      alignments.forEach(({ value, icon, title }) => {
+      alignments.forEach(({ value, icon, titleKey }) => {
         const btn = document.createElement('button');
         btn.classList.add('ae-toolbar__btn');
-        btn.title = title;
+        btn.title = editorManager.t(titleKey);
         btn.appendChild(getIconElement(icon));
         const updateState = () => {
           const editor = editorManager.getEditor();

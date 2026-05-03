@@ -1,4 +1,4 @@
-import TaskList from '@tiptap/extension-task-list';
+﻿import TaskList from '@tiptap/extension-task-list';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createTaskListPlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '任务列表';
+      btn.title = editorManager.t('toolbar.taskList');
       btn.appendChild(getIconElement('task-list'));
       const updateState = () => {
         const editor = editorManager.getEditor();

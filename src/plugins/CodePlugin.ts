@@ -1,4 +1,4 @@
-import Code from '@tiptap/extension-code';
+﻿import Code from '@tiptap/extension-code';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createCodePlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '行内代码 (Ctrl+E)';
+      btn.title = editorManager.t('toolbar.code');
       btn.appendChild(getIconElement('code'));
 
       const updateState = () => {

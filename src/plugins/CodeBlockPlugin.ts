@@ -1,4 +1,4 @@
-import CodeBlock from '@tiptap/extension-code-block';
+﻿import CodeBlock from '@tiptap/extension-code-block';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createCodeBlockPlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '代码块 (Ctrl+Alt+C)';
+      btn.title = editorManager.t('toolbar.codeBlock');
       btn.appendChild(getIconElement('code-block'));
       const updateState = () => {
         const editor = editorManager.getEditor();

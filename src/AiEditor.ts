@@ -35,6 +35,8 @@ export class AiEditor {
       placeholder: options.placeholder,
       autofocus: options.autofocus,
       editable: options.editable,
+      lang: options.lang,
+      messages: options.messages,
     });
 
     this.resolvedPlugins = this.resolvePlugins(options.plugins, options.placeholder, options.pluginOptions);
@@ -98,7 +100,7 @@ export class AiEditor {
     } else {
       defaults = defaultPlugins.map((factory) => factory());
     }
-    defaults.push(createPlaceholderPlugin(placeholder));
+    defaults.push(createPlaceholderPlugin(placeholder, this.editorManager.getI18n()));
 
     const merged = new Map<string, EditorPlugin>();
 
@@ -138,7 +140,7 @@ export class AiEditor {
       const text = this.editorManager.getText();
       const chars = text.length;
       const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-      this.wordCountEl.textContent = `${words} 字 · ${chars} 字符`;
+      this.wordCountEl.textContent = this.editorManager.t('status.wordCount', { words, chars });
     };
     this.editorManager.on('update', update);
     update();

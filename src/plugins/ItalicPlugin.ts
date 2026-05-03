@@ -1,4 +1,4 @@
-import Italic from '@tiptap/extension-italic';
+﻿import Italic from '@tiptap/extension-italic';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createItalicPlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '斜体 (Ctrl+I)';
+      btn.title = editorManager.t('toolbar.italic');
       btn.appendChild(getIconElement('italic'));
 
       const updateState = () => {

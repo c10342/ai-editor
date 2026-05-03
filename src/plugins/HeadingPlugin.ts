@@ -1,4 +1,4 @@
-import Heading, { Level } from '@tiptap/extension-heading';
+﻿import Heading, { Level } from '@tiptap/extension-heading';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -17,20 +17,20 @@ export function createHeadingPlugin(options?: HeadingPluginOptions): EditorPlugi
       wrapper.classList.add('ae-toolbar__dropdown');
       const trigger = document.createElement('button');
       trigger.classList.add('ae-toolbar__btn', 'ae-toolbar__btn--dropdown');
-      trigger.title = '标题';
-      trigger.innerHTML = '<span class="ae-toolbar__btn-label">正文</span>';
+      trigger.title = editorManager.t('toolbar.heading');
+      trigger.innerHTML = `<span class="ae-toolbar__btn-label">${editorManager.t('toolbar.heading.paragraph')}</span>`;
       trigger.appendChild(getIconElement('chevronDown'));
       const menu = document.createElement('div');
       menu.classList.add('ae-toolbar__dropdown-menu');
-      const headings = [
-        { level: 0, label: '正文', tag: 'p' },
-        ...levels.map((l) => ({ level: l, label: `标题 ${l}`, tag: `h${l}` })),
+      const headings: Array<{ level: number; labelKey: string; tag: string; params?: Record<string, number> }> = [
+        { level: 0, labelKey: 'toolbar.heading.paragraph', tag: 'p' },
+        ...levels.map((l) => ({ level: l, labelKey: 'toolbar.heading.level', tag: `h${l}`, params: { level: l } })),
       ];
-      headings.forEach(({ level, label, tag }) => {
+      headings.forEach(({ level, labelKey, tag, params }) => {
         const item = document.createElement('div');
         item.classList.add('ae-toolbar__dropdown-item');
         const inner = document.createElement(tag);
-        inner.textContent = label;
+        inner.textContent = editorManager.t(labelKey, params);
         inner.classList.add('ae-toolbar__dropdown-item-text');
         item.appendChild(inner);
         item.addEventListener('click', () => {
@@ -49,9 +49,9 @@ export function createHeadingPlugin(options?: HeadingPluginOptions): EditorPlugi
       const updateState = () => {
         const editor = editorManager.getEditor();
         if (!editor) return;
-        let currentLabel = '正文';
+        let currentLabel = editorManager.t('toolbar.heading.paragraph');
         for (const l of levels) {
-          if (editor.isActive('heading', { level: l })) { currentLabel = `标题 ${l}`; break; }
+          if (editor.isActive('heading', { level: l })) { currentLabel = editorManager.t('toolbar.heading.level', { level: l }); break; }
         }
         const labelEl = trigger.querySelector('.ae-toolbar__btn-label');
         if (labelEl) labelEl.textContent = currentLabel;

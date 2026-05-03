@@ -1,4 +1,4 @@
-import Color from '@tiptap/extension-color';
+﻿import Color from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
@@ -16,7 +16,7 @@ export function createTextColorPlugin(): EditorPlugin {
       wrapper.classList.add('ae-toolbar__color-picker');
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '文字颜色';
+      btn.title = editorManager.t('toolbar.textColor');
       btn.appendChild(getIconElement('text-color'));
       const colorBar = document.createElement('div');
       colorBar.classList.add('ae-toolbar__color-bar');
@@ -42,7 +42,7 @@ export function createTextColorPlugin(): EditorPlugin {
       });
       const resetBtn = document.createElement('button');
       resetBtn.classList.add('ae-toolbar__color-reset');
-      resetBtn.textContent = '重置颜色';
+      resetBtn.textContent = editorManager.t('toolbar.color.reset');
       resetBtn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
         if (editor) editor.chain().focus().unsetColor().run();

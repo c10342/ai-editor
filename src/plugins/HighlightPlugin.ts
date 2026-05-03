@@ -1,4 +1,4 @@
-import Highlight from '@tiptap/extension-highlight';
+﻿import Highlight from '@tiptap/extension-highlight';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createHighlightPlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '高亮';
+      btn.title = editorManager.t('toolbar.highlight');
       btn.appendChild(getIconElement('highlight'));
       const updateState = () => {
         const editor = editorManager.getEditor();

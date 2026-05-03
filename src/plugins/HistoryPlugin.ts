@@ -1,4 +1,4 @@
-import History from '@tiptap/extension-history';
+﻿import History from '@tiptap/extension-history';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -11,7 +11,7 @@ export function createHistoryPlugin(): EditorPlugin {
       group.classList.add('ae-toolbar__group');
       const undoBtn = document.createElement('button');
       undoBtn.classList.add('ae-toolbar__btn');
-      undoBtn.title = '撤销 (Ctrl+Z)';
+      undoBtn.title = editorManager.t('toolbar.undo');
       undoBtn.appendChild(getIconElement('undo'));
       const updateUndoState = () => {
         const editor = editorManager.getEditor();
@@ -23,7 +23,7 @@ export function createHistoryPlugin(): EditorPlugin {
       });
       const redoBtn = document.createElement('button');
       redoBtn.classList.add('ae-toolbar__btn');
-      redoBtn.title = '重做 (Ctrl+Shift+Z)';
+      redoBtn.title = editorManager.t('toolbar.redo');
       redoBtn.appendChild(getIconElement('redo'));
       const updateRedoState = () => {
         const editor = editorManager.getEditor();

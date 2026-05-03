@@ -1,4 +1,4 @@
-import Underline from '@tiptap/extension-underline';
+﻿import Underline from '@tiptap/extension-underline';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
@@ -9,7 +9,7 @@ export function createUnderlinePlugin(): EditorPlugin {
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
-      btn.title = '下划线 (Ctrl+U)';
+      btn.title = editorManager.t('toolbar.underline');
       btn.appendChild(getIconElement('underline'));
 
       const updateState = () => {
