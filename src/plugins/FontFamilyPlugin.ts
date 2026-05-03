@@ -15,11 +15,11 @@ export function createFontFamilyPlugin(): EditorPlugin {
       const menu = document.createElement("div");
       menu.classList.add("ae-toolbar__dropdown-menu");
       const fonts = [
-        { labelKey: "toolbar.fontFamily.default", value: "" },
-        { labelKey: "toolbar.fontFamily.songti", value: "SimSun, serif" },
-        { labelKey: "toolbar.fontFamily.heiti", value: "SimHei, sans-serif" },
-        { labelKey: "toolbar.fontFamily.yahei", value: "Microsoft YaHei, sans-serif" },
-        { labelKey: "toolbar.fontFamily.kaiti", value: "KaiTi, serif" },
+        { labelKey: "toolbar.fontFamilyOptions.default", value: "" },
+        { labelKey: "toolbar.fontFamilyOptions.songti", value: "SimSun, serif" },
+        { labelKey: "toolbar.fontFamilyOptions.heiti", value: "SimHei, sans-serif" },
+        { labelKey: "toolbar.fontFamilyOptions.yahei", value: "Microsoft YaHei, sans-serif" },
+        { labelKey: "toolbar.fontFamilyOptions.kaiti", value: "KaiTi, serif" },
         { label: "Arial", value: "Arial, sans-serif" },
         { label: "Georgia", value: "Georgia, serif" },
         { label: "Times New Roman", value: "Times New Roman, serif" },
