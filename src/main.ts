@@ -1,8 +1,4 @@
-import './styles/index.scss';
-import { AiEditor } from './AiEditor';
-
-export { AiEditor };
-export type { AiEditor as default };
+import { AiEditor } from ".";
 
 const appEl = document.getElementById('app');
 if (appEl) {
