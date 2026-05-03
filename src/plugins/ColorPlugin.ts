@@ -23,10 +23,26 @@ export function createTextColorPlugin(): EditorPlugin {
       const popover = document.createElement('div');
       popover.classList.add('ae-toolbar__color-popover');
       const colors = [
-        '#000000', '#434343', '#666666', '#999999', '#cccccc',
-        '#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6',
-        '#8b5cf6', '#ec4899', '#14b8a6', '#6366f1', '#a855f7',
-        '#dc2626', '#ea580c', '#ca8a04', '#16a34a', '#2563eb',
+        '#000000',
+        '#434343',
+        '#666666',
+        '#999999',
+        '#cccccc',
+        '#ef4444',
+        '#f97316',
+        '#eab308',
+        '#22c55e',
+        '#3b82f6',
+        '#8b5cf6',
+        '#ec4899',
+        '#14b8a6',
+        '#6366f1',
+        '#a855f7',
+        '#dc2626',
+        '#ea580c',
+        '#ca8a04',
+        '#16a34a',
+        '#2563eb',
       ];
       colors.forEach((color) => {
         const swatch = document.createElement('button');
@@ -50,11 +66,19 @@ export function createTextColorPlugin(): EditorPlugin {
         colorBar.style.backgroundColor = '';
       });
       popover.appendChild(resetBtn);
-      btn.addEventListener('click', (e) => { e.stopPropagation(); popover.classList.toggle('is-open'); });
-      document.addEventListener('click', () => { popover.classList.remove('is-open'); });
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        popover.classList.toggle('is-open');
+      });
+      document.addEventListener('click', () => {
+        popover.classList.remove('is-open');
+      });
       const updateState = () => {
         const editor = editorManager.getEditor();
-        if (editor) { const color = editor.getAttributes('textStyle').color; colorBar.style.backgroundColor = color || ''; }
+        if (editor) {
+          const color = editor.getAttributes('textStyle').color;
+          colorBar.style.backgroundColor = color || '';
+        }
       };
       editorManager.on('selection-update', updateState);
       editorManager.on('update', updateState);

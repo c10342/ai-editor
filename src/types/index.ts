@@ -30,9 +30,7 @@ export interface ToolbarGroup {
   items: ToolbarItem[];
 }
 
-export type ToolbarRenderFn = (
-  editorManager: any
-) => HTMLElement | HTMLElement[];
+export type ToolbarRenderFn = (editorManager: any) => HTMLElement | HTMLElement[];
 
 export interface EditorPlugin {
   name: string;
@@ -56,19 +54,17 @@ export interface EditorOptions {
 }
 
 export interface EditorEventMap {
-  'update': { editor: any };
+  update: { editor: any };
   'selection-update': { editor: any };
-  'focus': { editor: any };
-  'blur': { editor: any };
-  'create': { editor: any };
-  'destroy': { editor: any };
+  focus: { editor: any };
+  blur: { editor: any };
+  create: { editor: any };
+  destroy: { editor: any };
 }
 
 export type EditorEventType = keyof EditorEventMap;
 
-export type EditorEventCallback<T extends EditorEventType> = (
-  payload: EditorEventMap[T]
-) => void;
+export type EditorEventCallback<T extends EditorEventType> = (payload: EditorEventMap[T]) => void;
 
 export interface FontOption {
   label: string;

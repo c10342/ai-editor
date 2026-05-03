@@ -17,7 +17,10 @@ export function createCodeBlockPlugin(): EditorPlugin {
       };
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().toggleCodeBlock().run(); updateState(); }
+        if (editor) {
+          editor.chain().focus().toggleCodeBlock().run();
+          updateState();
+        }
       });
       editorManager.on('selection-update', updateState);
       editorManager.on('update', updateState);

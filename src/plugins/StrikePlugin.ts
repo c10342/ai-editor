@@ -19,7 +19,10 @@ export function createStrikePlugin(): EditorPlugin {
 
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().toggleStrike().run(); updateState(); }
+        if (editor) {
+          editor.chain().focus().toggleStrike().run();
+          updateState();
+        }
       });
 
       editorManager.on('selection-update', updateState);

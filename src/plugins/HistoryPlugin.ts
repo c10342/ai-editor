@@ -19,7 +19,10 @@ export function createHistoryPlugin(): EditorPlugin {
       };
       undoBtn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().undo().run(); updateUndoState(); }
+        if (editor) {
+          editor.chain().focus().undo().run();
+          updateUndoState();
+        }
       });
       const redoBtn = document.createElement('button');
       redoBtn.classList.add('ae-toolbar__btn');
@@ -31,10 +34,19 @@ export function createHistoryPlugin(): EditorPlugin {
       };
       redoBtn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().redo().run(); updateRedoState(); }
+        if (editor) {
+          editor.chain().focus().redo().run();
+          updateRedoState();
+        }
       });
-      editorManager.on('update', () => { updateUndoState(); updateRedoState(); });
-      editorManager.on('selection-update', () => { updateUndoState(); updateRedoState(); });
+      editorManager.on('update', () => {
+        updateUndoState();
+        updateRedoState();
+      });
+      editorManager.on('selection-update', () => {
+        updateUndoState();
+        updateRedoState();
+      });
       group.appendChild(undoBtn);
       group.appendChild(redoBtn);
       return group;

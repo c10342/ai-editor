@@ -19,7 +19,10 @@ export function createItalicPlugin(): EditorPlugin {
 
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().toggleItalic().run(); updateState(); }
+        if (editor) {
+          editor.chain().focus().toggleItalic().run();
+          updateState();
+        }
       });
 
       editorManager.on('selection-update', updateState);

@@ -1,6 +1,13 @@
 import type { EditorManager } from '@/core';
 import type { EditorPlugin } from '@/types';
-import { createBoldPlugin, createItalicPlugin, createUnderlinePlugin, createStrikePlugin, createCodePlugin, createLinkPlugin } from '@/plugins';
+import {
+  createBoldPlugin,
+  createItalicPlugin,
+  createUnderlinePlugin,
+  createStrikePlugin,
+  createCodePlugin,
+  createLinkPlugin,
+} from '@/plugins';
 
 export interface BubbleMenuOptions {
   editorManager: EditorManager;
@@ -40,7 +47,9 @@ export class BubbleMenu {
           } else {
             this.el.appendChild(element);
           }
-        } catch (_) {}
+        } catch (_e) {
+          /* ignored */
+        }
       }
     }
   }

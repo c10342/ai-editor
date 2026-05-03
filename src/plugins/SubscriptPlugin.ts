@@ -17,7 +17,10 @@ export function createSubscriptPlugin(): EditorPlugin {
       };
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().toggleSubscript().run(); updateState(); }
+        if (editor) {
+          editor.chain().focus().toggleSubscript().run();
+          updateState();
+        }
       });
       editorManager.on('selection-update', updateState);
       editorManager.on('update', updateState);

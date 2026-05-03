@@ -44,8 +44,13 @@ export function createFontFamilyPlugin(): EditorPlugin {
         });
         menu.appendChild(item);
       });
-      trigger.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('is-open'); });
-      document.addEventListener('click', () => { menu.classList.remove('is-open'); });
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('is-open');
+      });
+      document.addEventListener('click', () => {
+        menu.classList.remove('is-open');
+      });
       wrapper.appendChild(trigger);
       wrapper.appendChild(menu);
       return wrapper;

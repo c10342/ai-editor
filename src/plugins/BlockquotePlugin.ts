@@ -17,7 +17,10 @@ export function createBlockquotePlugin(): EditorPlugin {
       };
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().toggleBlockquote().run(); updateState(); }
+        if (editor) {
+          editor.chain().focus().toggleBlockquote().run();
+          updateState();
+        }
       });
       editorManager.on('selection-update', updateState);
       editorManager.on('update', updateState);

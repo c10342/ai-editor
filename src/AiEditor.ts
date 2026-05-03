@@ -39,7 +39,11 @@ export class AiEditor {
       messages: options.messages,
     });
 
-    this.resolvedPlugins = this.resolvePlugins(options.plugins, options.placeholder, options.pluginOptions);
+    this.resolvedPlugins = this.resolvePlugins(
+      options.plugins,
+      options.placeholder,
+      options.pluginOptions,
+    );
     this.registerPlugins();
 
     const toolbarPlugins = this.filterToolbarPlugins(options.toolbar);
@@ -87,7 +91,11 @@ export class AiEditor {
     return withToolbar.filter((p) => set.has(p.name));
   }
 
-  private resolvePlugins(localPlugins?: EditorPlugin[], placeholder?: string, pluginOptions?: Record<string, any>): EditorPlugin[] {
+  private resolvePlugins(
+    localPlugins?: EditorPlugin[],
+    placeholder?: string,
+    pluginOptions?: Record<string, any>,
+  ): EditorPlugin[] {
     const globalPlugins = PluginRegistry.getGlobalPlugins();
 
     let defaults: EditorPlugin[];

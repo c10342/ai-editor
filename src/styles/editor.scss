@@ -2,12 +2,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--ae-color-border);
-  border-radius: var(--ae-radius-lg);
-  background-color: var(--ae-color-bg);
+  overflow: hidden;
   font-family: var(--ae-font-family);
   color: var(--ae-color-text);
-  overflow: hidden;
+  background-color: var(--ae-color-bg);
+  border: 1px solid var(--ae-color-border);
+  border-radius: var(--ae-radius-lg);
 
   * {
     box-sizing: border-box;
@@ -16,5 +16,5 @@
 
 .#{$prefix}--focused {
   border-color: var(--ae-color-primary);
-  box-shadow: 0 0 0 2px rgba(var(--ae-color-primary-rgb), 0.15);
+  box-shadow: 0 0 0 2px rgb(var(--ae-color-primary-rgb), 0.15);
 }

@@ -21,9 +21,11 @@
     width: $width;
     height: $width;
   }
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: $thumb-color;
     border-radius: $width;
@@ -37,6 +39,6 @@
 }
 
 @mixin no-select {
-  user-select: none;
   -webkit-user-select: none;
+  user-select: none;
 }

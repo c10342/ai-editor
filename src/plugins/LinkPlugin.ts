@@ -5,10 +5,12 @@ import type { EditorPlugin } from '@/types';
 export function createLinkPlugin(): EditorPlugin {
   return {
     name: 'link',
-    extensions: [Link.configure({
-      openOnClick: false,
-      HTMLAttributes: { rel: 'noopener noreferrer', target: '_blank' },
-    })],
+    extensions: [
+      Link.configure({
+        openOnClick: false,
+        HTMLAttributes: { rel: 'noopener noreferrer', target: '_blank' },
+      }),
+    ],
     renderToolbar(editorManager) {
       const btn = document.createElement('button');
       btn.classList.add('ae-toolbar__btn');
@@ -21,7 +23,11 @@ export function createLinkPlugin(): EditorPlugin {
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
         if (!editor) return;
-        if (editor.isActive('link')) { editor.chain().focus().unsetLink().run(); updateState(); return; }
+        if (editor.isActive('link')) {
+          editor.chain().focus().unsetLink().run();
+          updateState();
+          return;
+        }
         showLinkModal(editor, editorManager, updateState);
       });
       editorManager.on('selection-update', updateState);
@@ -59,7 +65,10 @@ function showLinkModal(editor: any, em: any, updateState: () => void) {
   const cancelBtn = document.createElement('button');
   cancelBtn.classList.add('ae-link-modal__btn', 'ae-link-modal__btn--cancel');
   cancelBtn.textContent = em.t('link.modal.cancel');
-  cancelBtn.addEventListener('click', () => { overlay.remove(); editor.commands.focus(); });
+  cancelBtn.addEventListener('click', () => {
+    overlay.remove();
+    editor.commands.focus();
+  });
   const confirmBtn = document.createElement('button');
   confirmBtn.classList.add('ae-link-modal__btn', 'ae-link-modal__btn--confirm');
   confirmBtn.textContent = em.t('link.modal.confirm');
@@ -67,7 +76,15 @@ function showLinkModal(editor: any, em: any, updateState: () => void) {
     const url = urlInput.value.trim();
     if (url) {
       if (selectedText && textInput.value && textInput.value !== selectedText) {
-        editor.chain().focus().insertContent({ type: 'text', marks: [{ type: 'link', attrs: { href: url } }], text: textInput.value }).run();
+        editor
+          .chain()
+          .focus()
+          .insertContent({
+            type: 'text',
+            marks: [{ type: 'link', attrs: { href: url } }],
+            text: textInput.value,
+          })
+          .run();
       } else {
         editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
       }
@@ -85,6 +102,11 @@ function showLinkModal(editor: any, em: any, updateState: () => void) {
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
   urlInput.focus();
-  urlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') confirmBtn.click(); if (e.key === 'Escape') cancelBtn.click(); });
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) cancelBtn.click(); });
+  urlInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') confirmBtn.click();
+    if (e.key === 'Escape') cancelBtn.click();
+  });
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) cancelBtn.click();
+  });
 }

@@ -19,7 +19,10 @@ export function createUnderlinePlugin(): EditorPlugin {
 
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().toggleUnderline().run(); updateState(); }
+        if (editor) {
+          editor.chain().focus().toggleUnderline().run();
+          updateState();
+        }
       });
 
       editorManager.on('selection-update', updateState);

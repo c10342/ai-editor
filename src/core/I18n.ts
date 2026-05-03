@@ -7,7 +7,7 @@ export type LocaleMessages = Record<string, string>;
 
 const builtinMessages: Record<Locale, LocaleMessages> = {
   'zh-CN': zhCN,
-  'en': en,
+  en: en,
   'zh-TW': zhTW,
 };
 
@@ -35,6 +35,9 @@ export class I18n {
   t(key: string, params?: Record<string, string | number>): string {
     const text = this.messages[this.locale]?.[key] || this.messages['zh-CN']?.[key] || key;
     if (!params) return text;
-    return Object.entries(params).reduce((result, [k, v]) => result.replace(`{${k}}`, String(v)), text);
+    return Object.entries(params).reduce(
+      (result, [k, v]) => result.replace(`{${k}}`, String(v)),
+      text,
+    );
   }
 }

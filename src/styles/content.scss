@@ -2,38 +2,39 @@
   flex: 1;
   min-height: var(--ae-editor-min-height);
   padding: var(--ae-editor-padding);
-  outline: none;
+  overflow-y: auto;
   font-size: 15px;
   line-height: 1.7;
   color: var(--ae-color-text);
-  overflow-y: auto;
+  outline: none;
+
   @include scrollbar;
 
   > h1 {
+    margin: 0.67em 0;
     font-size: 2em;
     font-weight: 700;
-    margin: 0.67em 0;
     line-height: 1.3;
   }
 
   > h2 {
+    margin: 0.75em 0;
     font-size: 1.5em;
     font-weight: 600;
-    margin: 0.75em 0;
     line-height: 1.35;
   }
 
   > h3 {
+    margin: 0.83em 0;
     font-size: 1.25em;
     font-weight: 600;
-    margin: 0.83em 0;
     line-height: 1.4;
   }
 
   > h4 {
+    margin: 1em 0;
     font-size: 1.1em;
     font-weight: 600;
-    margin: 1em 0;
     line-height: 1.4;
   }
 
@@ -60,12 +61,12 @@
   }
 
   > blockquote {
-    margin: 0.75em 0;
     padding: 0.5em 1em;
-    border-left: 4px solid var(--ae-color-primary);
-    background-color: var(--ae-color-primary-light);
-    border-radius: 0 var(--ae-radius-sm) var(--ae-radius-sm) 0;
+    margin: 0.75em 0;
     color: var(--ae-color-text-secondary);
+    background-color: var(--ae-color-primary-light);
+    border-left: 4px solid var(--ae-color-primary);
+    border-radius: 0 var(--ae-radius-sm) var(--ae-radius-sm) 0;
 
     p {
       margin: 0.25em 0;
@@ -73,44 +74,44 @@
   }
 
   > hr {
+    margin: 1.5em 0;
     border: none;
     border-top: 2px solid var(--ae-color-border);
-    margin: 1.5em 0;
   }
 
   > pre {
-    background-color: #1e1e2e;
-    color: #cdd6f4;
-    border-radius: var(--ae-radius-md);
     padding: 1em;
     margin: 0.75em 0;
     overflow-x: auto;
     font-family: var(--ae-font-mono);
     font-size: 0.9em;
+    color: #cdd6f4;
+    background-color: #1e1e2e;
+    border-radius: var(--ae-radius-md);
 
     code {
-      background: none;
       padding: 0;
-      border-radius: 0;
-      color: inherit;
       font-size: inherit;
+      color: inherit;
+      background: none;
+      border-radius: 0;
     }
   }
 
   code {
-    background-color: var(--ae-color-bg-active);
-    color: var(--ae-color-danger);
     padding: 0.15em 0.4em;
-    border-radius: var(--ae-radius-sm);
     font-family: var(--ae-font-mono);
     font-size: 0.875em;
+    color: var(--ae-color-danger);
+    background-color: var(--ae-color-bg-active);
+    border-radius: var(--ae-radius-sm);
   }
 
   img {
     max-width: 100%;
     height: auto;
-    border-radius: var(--ae-radius-md);
     margin: 0.75em 0;
+    border-radius: var(--ae-radius-md);
 
     &.ProseMirror-selectednode {
       outline: 3px solid var(--ae-color-primary);
@@ -129,60 +130,61 @@
   }
 
   table {
-    border-collapse: collapse;
     width: 100%;
     margin: 0.75em 0;
     overflow: hidden;
-    border-radius: var(--ae-radius-md);
+    border-collapse: collapse;
     border: 1px solid var(--ae-color-border);
+    border-radius: var(--ae-radius-md);
 
     td,
     th {
-      border: 1px solid var(--ae-color-border);
-      padding: 8px 12px;
-      min-width: 80px;
-      vertical-align: top;
       position: relative;
+      min-width: 80px;
+      padding: 8px 12px;
+      vertical-align: top;
+      border: 1px solid var(--ae-color-border);
     }
 
     th {
-      background-color: var(--ae-color-bg-hover);
       font-weight: 600;
+      background-color: var(--ae-color-bg-hover);
     }
 
     .selectedCell {
-      background-color: rgba(var(--ae-color-primary-rgb), 0.1);
+      background-color: rgb(var(--ae-color-primary-rgb), 0.1);
     }
 
     .column-resize-handle {
       position: absolute;
-      right: -2px;
       top: 0;
+      right: -2px;
       bottom: -2px;
       width: 4px;
-      background-color: var(--ae-color-primary);
       pointer-events: none;
+      background-color: var(--ae-color-primary);
     }
   }
 
   ul[data-type='taskList'] {
-    list-style: none;
     padding-left: 0;
+    list-style: none;
 
     li {
       display: flex;
-      align-items: flex-start;
       gap: 8px;
+      align-items: flex-start;
 
       > label {
         @include flex-center;
+
         flex-shrink: 0;
         width: 18px;
         height: 18px;
-        border: 2px solid var(--ae-color-border);
-        border-radius: var(--ae-radius-sm);
         margin-top: 3px;
         cursor: pointer;
+        border: 2px solid var(--ae-color-border);
+        border-radius: var(--ae-radius-sm);
 
         input[type='checkbox'] {
           display: none;
@@ -193,9 +195,9 @@
           border-color: var(--ae-color-primary);
 
           &::after {
-            content: '✓';
-            color: white;
             font-size: 12px;
+            color: white;
+            content: '✓';
           }
         }
       }
@@ -207,21 +209,21 @@
   }
 
   mark {
-    background-color: #fef08a;
     padding: 0.1em 0.2em;
+    background-color: #fef08a;
     border-radius: 2px;
   }
 
   .ProseMirror {
-    outline: none;
     min-height: inherit;
+    outline: none;
 
     p.is-editor-empty:first-child::before {
-      content: attr(data-placeholder);
       float: left;
+      height: 0;
       color: var(--ae-color-text-disabled);
       pointer-events: none;
-      height: 0;
+      content: attr(data-placeholder);
     }
   }
 }

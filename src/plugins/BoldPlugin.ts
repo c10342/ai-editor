@@ -19,7 +19,10 @@ export function createBoldPlugin(): EditorPlugin {
 
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().toggleBold().run(); updateState(); }
+        if (editor) {
+          editor.chain().focus().toggleBold().run();
+          updateState();
+        }
       });
 
       editorManager.on('selection-update', updateState);

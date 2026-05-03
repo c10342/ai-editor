@@ -33,6 +33,7 @@ export class Toolbar {
           }
           this.appendDivider();
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.warn(`Plugin "${plugin.name}" renderToolbar failed:`, e);
         }
       }

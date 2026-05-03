@@ -2,7 +2,7 @@ export function createElement(
   tag: string,
   className?: string,
   attributes?: Record<string, string>,
-  children?: (HTMLElement | string)[]
+  children?: (HTMLElement | string)[],
 ): HTMLElement {
   const el = document.createElement(tag);
   if (className) el.className = className;
@@ -31,17 +31,13 @@ export function removeClasses(el: HTMLElement, ...classNames: string[]): void {
   el.classList.remove(...classNames);
 }
 
-export function toggleClass(
-  el: HTMLElement,
-  className: string,
-  force?: boolean
-): void {
+export function toggleClass(el: HTMLElement, className: string, force?: boolean): void {
   el.classList.toggle(className, force);
 }
 
 export function debounce<T extends (...args: any[]) => any>(
   fn: T,
-  delay: number
+  delay: number,
 ): (...args: Parameters<T>) => void {
   let timer: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {

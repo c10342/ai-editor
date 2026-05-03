@@ -17,7 +17,10 @@ export function createOrderedListPlugin(): EditorPlugin {
       };
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().toggleOrderedList().run(); updateState(); }
+        if (editor) {
+          editor.chain().focus().toggleOrderedList().run();
+          updateState();
+        }
       });
       editorManager.on('selection-update', updateState);
       editorManager.on('update', updateState);

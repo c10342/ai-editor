@@ -17,7 +17,10 @@ export function createSuperscriptPlugin(): EditorPlugin {
       };
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().toggleSuperscript().run(); updateState(); }
+        if (editor) {
+          editor.chain().focus().toggleSuperscript().run();
+          updateState();
+        }
       });
       editorManager.on('selection-update', updateState);
       editorManager.on('update', updateState);

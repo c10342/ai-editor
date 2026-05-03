@@ -45,21 +45,32 @@ function showImageModal(editorManager: any) {
   fileLabel.appendChild(fileInput);
   fileInput.addEventListener('change', () => {
     const file = fileInput.files?.[0];
-    if (file) { const reader = new FileReader(); reader.onload = () => { urlInput.value = reader.result as string; }; reader.readAsDataURL(file); }
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        urlInput.value = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   });
   const btnGroup = document.createElement('div');
   btnGroup.classList.add('ae-link-modal__actions');
   const cancelBtn = document.createElement('button');
   cancelBtn.classList.add('ae-link-modal__btn', 'ae-link-modal__btn--cancel');
   cancelBtn.textContent = editorManager.t('image.modal.cancel');
-  cancelBtn.addEventListener('click', () => { overlay.remove(); });
+  cancelBtn.addEventListener('click', () => {
+    overlay.remove();
+  });
   const confirmBtn = document.createElement('button');
   confirmBtn.classList.add('ae-link-modal__btn', 'ae-link-modal__btn--confirm');
   confirmBtn.textContent = editorManager.t('image.modal.confirm');
   confirmBtn.addEventListener('click', () => {
     const url = urlInput.value.trim();
     const alt = altInput.value.trim();
-    if (url) { const editor = editorManager.getEditor(); if (editor) editor.chain().focus().setImage({ src: url, alt }).run(); }
+    if (url) {
+      const editor = editorManager.getEditor();
+      if (editor) editor.chain().focus().setImage({ src: url, alt }).run();
+    }
     overlay.remove();
   });
   btnGroup.appendChild(cancelBtn);
@@ -72,6 +83,11 @@ function showImageModal(editorManager: any) {
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
   urlInput.focus();
-  urlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') confirmBtn.click(); if (e.key === 'Escape') cancelBtn.click(); });
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) cancelBtn.click(); });
+  urlInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') confirmBtn.click();
+    if (e.key === 'Escape') cancelBtn.click();
+  });
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) cancelBtn.click();
+  });
 }

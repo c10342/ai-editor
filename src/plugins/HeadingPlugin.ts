@@ -22,9 +22,19 @@ export function createHeadingPlugin(options?: HeadingPluginOptions): EditorPlugi
       trigger.appendChild(getIconElement('chevronDown'));
       const menu = document.createElement('div');
       menu.classList.add('ae-toolbar__dropdown-menu');
-      const headings: Array<{ level: number; labelKey: string; tag: string; params?: Record<string, number> }> = [
+      const headings: Array<{
+        level: number;
+        labelKey: string;
+        tag: string;
+        params?: Record<string, number>;
+      }> = [
         { level: 0, labelKey: 'toolbar.heading.paragraph', tag: 'p' },
-        ...levels.map((l) => ({ level: l, labelKey: 'toolbar.heading.level', tag: `h${l}`, params: { level: l } })),
+        ...levels.map((l) => ({
+          level: l,
+          labelKey: 'toolbar.heading.level',
+          tag: `h${l}`,
+          params: { level: l },
+        })),
       ];
       headings.forEach(({ level, labelKey, tag, params }) => {
         const item = document.createElement('div');
@@ -37,21 +47,34 @@ export function createHeadingPlugin(options?: HeadingPluginOptions): EditorPlugi
           const editor = editorManager.getEditor();
           if (editor) {
             if (level === 0) editor.chain().focus().setParagraph().run();
-            else editor.chain().focus().toggleHeading({ level: level as 1 | 2 | 3 | 4 | 5 | 6 }).run();
+            else
+              editor
+                .chain()
+                .focus()
+                .toggleHeading({ level: level as 1 | 2 | 3 | 4 | 5 | 6 })
+                .run();
             menu.classList.remove('is-open');
             updateState();
           }
         });
         menu.appendChild(item);
       });
-      trigger.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('is-open'); });
-      document.addEventListener('click', () => { menu.classList.remove('is-open'); });
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('is-open');
+      });
+      document.addEventListener('click', () => {
+        menu.classList.remove('is-open');
+      });
       const updateState = () => {
         const editor = editorManager.getEditor();
         if (!editor) return;
         let currentLabel = editorManager.t('toolbar.heading.paragraph');
         for (const l of levels) {
-          if (editor.isActive('heading', { level: l })) { currentLabel = editorManager.t('toolbar.heading.level', { level: l }); break; }
+          if (editor.isActive('heading', { level: l })) {
+            currentLabel = editorManager.t('toolbar.heading.level', { level: l });
+            break;
+          }
         }
         const labelEl = trigger.querySelector('.ae-toolbar__btn-label');
         if (labelEl) labelEl.textContent = currentLabel;

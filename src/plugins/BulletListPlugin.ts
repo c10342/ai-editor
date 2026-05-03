@@ -17,7 +17,10 @@ export function createBulletListPlugin(): EditorPlugin {
       };
       btn.addEventListener('click', () => {
         const editor = editorManager.getEditor();
-        if (editor) { editor.chain().focus().toggleBulletList().run(); updateState(); }
+        if (editor) {
+          editor.chain().focus().toggleBulletList().run();
+          updateState();
+        }
       });
       editorManager.on('selection-update', updateState);
       editorManager.on('update', updateState);

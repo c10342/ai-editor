@@ -1,49 +1,45 @@
 @import 'variables';
 @import 'mixins';
+@import 'editor';
+@import 'toolbar';
+@import 'content';
+@import 'bubble-menu';
+@import 'modal';
 
 :root {
   --ae-color-primary: #3b82f6;
   --ae-color-primary-hover: #2563eb;
   --ae-color-primary-light: #eff6ff;
   --ae-color-primary-rgb: 59, 130, 246;
-
-  --ae-color-bg: #ffffff;
+  --ae-color-bg: #fff;
   --ae-color-bg-hover: #f3f4f6;
   --ae-color-bg-active: #e5e7eb;
-
   --ae-color-border: #e5e7eb;
   --ae-color-border-light: #f3f4f6;
-
   --ae-color-text: #1f2937;
   --ae-color-text-secondary: #6b7280;
   --ae-color-text-disabled: #9ca3af;
-
   --ae-color-danger: #ef4444;
   --ae-color-success: #22c55e;
   --ae-color-warning: #f59e0b;
-
-  --ae-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --ae-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --ae-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --ae-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-
+  --ae-shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
+  --ae-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+  --ae-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
+  --ae-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);
   --ae-radius-sm: 4px;
   --ae-radius-md: 6px;
   --ae-radius-lg: 8px;
   --ae-radius-xl: 12px;
-
-  --ae-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-  --ae-font-mono: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
-
+  --ae-font-family:
+    -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, 'Helvetica Neue', arial, 'Noto Sans',
+    sans-serif;
+  --ae-font-mono: 'SF Mono', sfmono-regular, consolas, 'Liberation Mono', menlo, monospace;
   --ae-toolbar-height: 44px;
   --ae-toolbar-btn-size: 34px;
-
   --ae-editor-min-height: 300px;
   --ae-editor-padding: 16px 24px;
-
   --ae-transition-fast: 0.15s ease;
   --ae-transition-normal: 0.2s ease;
-
   --ae-z-toolbar: 10;
   --ae-z-dropdown: 100;
   --ae-z-bubble-menu: 200;
@@ -51,36 +47,30 @@
   --ae-z-modal: 1001;
 }
 
-@import 'editor';
-@import 'toolbar';
-@import 'content';
-@import 'bubble-menu';
-@import 'modal';
-
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 body {
   font-family: var(--ae-font-family);
+  line-height: 1.5;
   color: var(--ae-color-text);
   background-color: #f9fafb;
-  line-height: 1.5;
 }
 
 .#{$prefix}-app {
   max-width: 900px;
-  margin: 40px auto;
   padding: 0 20px;
+  margin: 40px auto;
 }
 
 .#{$prefix}-app-title {
+  margin-bottom: 24px;
   font-size: 24px;
   font-weight: 700;
   color: var(--ae-color-text);
-  margin-bottom: 24px;
   text-align: center;
 }
 
@@ -88,9 +78,9 @@ body {
   @include flex-between;
 
   padding: 8px 16px;
-  border-top: 1px solid var(--ae-color-border);
   font-size: 12px;
   color: var(--ae-color-text-secondary);
   background-color: var(--ae-color-bg);
+  border-top: 1px solid var(--ae-color-border);
   border-radius: 0 0 var(--ae-radius-lg) var(--ae-radius-lg);
 }
