@@ -1,5 +1,5 @@
-import type { EditorManager } from '@/core';
-import type { EditorPlugin } from '@/types';
+import type { EditorManager } from "@/core";
+import type { EditorPlugin } from "@/types";
 
 export interface ToolbarOptions {
   editorManager: EditorManager;
@@ -14,8 +14,8 @@ export class Toolbar {
   constructor(options: ToolbarOptions) {
     this.editorManager = options.editorManager;
     this.plugins = options.plugins;
-    this.el = document.createElement('div');
-    this.el.classList.add('ae-toolbar');
+    this.el = document.createElement("div");
+    this.el.classList.add("ae-toolbar");
     this.render();
   }
 
@@ -39,14 +39,14 @@ export class Toolbar {
       }
     }
 
-    if (this.el.lastElementChild?.classList.contains('ae-toolbar__divider')) {
+    if (this.el.lastElementChild?.classList.contains("ae-toolbar__divider")) {
       this.el.lastElementChild.remove();
     }
   }
 
   private appendDivider(): void {
-    const d = document.createElement('div');
-    d.classList.add('ae-toolbar__divider');
+    const d = document.createElement("div");
+    d.classList.add("ae-toolbar__divider");
     this.el.appendChild(d);
   }
 

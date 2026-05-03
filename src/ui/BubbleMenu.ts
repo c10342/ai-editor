@@ -1,5 +1,5 @@
-import type { EditorManager } from '@/core';
-import type { EditorPlugin } from '@/types';
+import type { EditorManager } from "@/core";
+import type { EditorPlugin } from "@/types";
 import {
   createBoldPlugin,
   createItalicPlugin,
@@ -7,7 +7,8 @@ import {
   createStrikePlugin,
   createCodePlugin,
   createLinkPlugin,
-} from '@/plugins';
+} from "@/plugins";
+import { logger } from "@/utils";
 
 export interface BubbleMenuOptions {
   editorManager: EditorManager;
@@ -29,8 +30,8 @@ export class BubbleMenu {
 
   constructor(options: BubbleMenuOptions) {
     this.editorManager = options.editorManager;
-    this.el = document.createElement('div');
-    this.el.classList.add('ae-bubble-menu');
+    this.el = document.createElement("div");
+    this.el.classList.add("ae-bubble-menu");
     this.render();
     this.setupEvents();
   }
@@ -47,24 +48,24 @@ export class BubbleMenu {
           } else {
             this.el.appendChild(element);
           }
-        } catch (_e) {
-          /* ignored */
+        } catch (err) {
+          logger.error("Error rendering toolbar:", err);
         }
       }
     }
   }
 
   private setupEvents(): void {
-    this.editorManager.on('selection-update', () => this.updateVisibility());
-    this.editorManager.on('blur', () => this.hide());
-    this.editorManager.on('focus', () => this.updateVisibility());
+    this.editorManager.on("selection-update", () => this.updateVisibility());
+    this.editorManager.on("blur", () => this.hide());
+    this.editorManager.on("focus", () => this.updateVisibility());
   }
 
   private updateVisibility(): void {
     const editor = this.editorManager.getEditor();
     if (!editor) return;
     const { from, to } = editor.state.selection;
-    const text = editor.state.doc.textBetween(from, to, '');
+    const text = editor.state.doc.textBetween(from, to, "");
     if (text.length > 0) this.show();
     else this.hide();
   }
@@ -72,7 +73,7 @@ export class BubbleMenu {
   private show(): void {
     if (this.isVisible) return;
     this.isVisible = true;
-    this.el.classList.add('is-visible');
+    this.el.classList.add("is-visible");
     const editor = this.editorManager.getEditor();
     if (!editor) return;
     const { from } = editor.state.selection;
@@ -83,7 +84,7 @@ export class BubbleMenu {
 
   private hide(): void {
     this.isVisible = false;
-    this.el.classList.remove('is-visible');
+    this.el.classList.remove("is-visible");
   }
 
   getElement(): HTMLElement {

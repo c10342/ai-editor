@@ -1,4 +1,4 @@
-import type { EditorPlugin } from '@/types';
+import type { EditorPlugin } from "@/types";
 
 export class ExtensionManager {
   private plugins: Map<string, EditorPlugin> = new Map();

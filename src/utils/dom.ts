@@ -13,7 +13,7 @@ export function createElement(
   }
   if (children) {
     children.forEach((child) => {
-      if (typeof child === 'string') {
+      if (typeof child === "string") {
         el.appendChild(document.createTextNode(child));
       } else {
         el.appendChild(child);
