@@ -1,39 +1,27 @@
 import Blockquote from '@tiptap/extension-blockquote';
 import { getIconElement } from '@/icons';
+import type { EditorPlugin } from '@/types';
 
-export function createBlockquotePlugin() {
+export function createBlockquotePlugin(): EditorPlugin {
   return {
     name: 'blockquote',
-    extension: Blockquote,
+    extensions: [Blockquote],
+    renderToolbar(editorManager) {
+      const btn = document.createElement('button');
+      btn.classList.add('ae-toolbar__btn');
+      btn.title = '引用';
+      btn.appendChild(getIconElement('quote'));
+      const updateState = () => {
+        const editor = editorManager.getEditor();
+        if (editor) btn.classList.toggle('is-active', editor.isActive('blockquote'));
+      };
+      btn.addEventListener('click', () => {
+        const editor = editorManager.getEditor();
+        if (editor) { editor.chain().focus().toggleBlockquote().run(); updateState(); }
+      });
+      editorManager.on('selection-update', updateState);
+      editorManager.on('update', updateState);
+      return btn;
+    },
   };
-}
-
-export function renderBlockquoteButton(
-  container: HTMLElement,
-  editorManager: any
-): HTMLElement {
-  const btn = document.createElement('button');
-  btn.classList.add('ae-toolbar__btn');
-  btn.title = '引用';
-  btn.appendChild(getIconElement('quote'));
-
-  const updateState = () => {
-    const editor = editorManager.getEditor();
-    if (editor) {
-      btn.classList.toggle('is-active', editor.isActive('blockquote'));
-    }
-  };
-
-  btn.addEventListener('click', () => {
-    const editor = editorManager.getEditor();
-    if (editor) {
-      editor.chain().focus().toggleBlockquote().run();
-      updateState();
-    }
-  });
-
-  editorManager.on('selection-update', updateState);
-  editorManager.on('update', updateState);
-
-  return btn;
 }

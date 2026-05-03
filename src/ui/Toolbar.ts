@@ -1,40 +1,19 @@
 import type { EditorManager } from '@/core';
-import {
-  renderBoldButton,
-  renderItalicButton,
-  renderUnderlineButton,
-  renderStrikeButton,
-  renderCodeButton,
-  renderCodeBlockButton,
-  renderHeadingDropdown,
-  renderBulletListButton,
-  renderOrderedListButton,
-  renderTaskListButton,
-  renderBlockquoteButton,
-  renderHorizontalRuleButton,
-  renderLinkButton,
-  renderImageButton,
-  renderTextAlignButtons,
-  renderHighlightButton,
-  renderTextColorButton,
-  renderSuperscriptButton,
-  renderSubscriptButton,
-  renderTableButton,
-  renderFontFamilyDropdown,
-  renderUndoButton,
-  renderRedoButton,
-} from '@/plugins';
+import type { EditorPlugin } from '@/types';
 
 export interface ToolbarOptions {
   editorManager: EditorManager;
+  plugins: EditorPlugin[];
 }
 
 export class Toolbar {
   private editorManager: EditorManager;
+  private plugins: EditorPlugin[];
   private el: HTMLElement;
 
   constructor(options: ToolbarOptions) {
     this.editorManager = options.editorManager;
+    this.plugins = options.plugins;
     this.el = document.createElement('div');
     this.el.classList.add('ae-toolbar');
     this.render();
@@ -43,54 +22,31 @@ export class Toolbar {
   private render(): void {
     const em = this.editorManager;
 
-    const createDivider = () => {
-      const d = document.createElement('div');
-      d.classList.add('ae-toolbar__divider');
-      return d;
-    };
+    for (const plugin of this.plugins) {
+      if (plugin.renderToolbar) {
+        try {
+          const elements = plugin.renderToolbar(em);
+          if (Array.isArray(elements)) {
+            elements.forEach((el) => this.el.appendChild(el));
+          } else {
+            this.el.appendChild(elements);
+          }
+          this.appendDivider();
+        } catch (e) {
+          console.warn(`Plugin "${plugin.name}" renderToolbar failed:`, e);
+        }
+      }
+    }
 
-    this.el.appendChild(renderFontFamilyDropdown(this.el, em));
-    this.el.appendChild(renderHeadingDropdown(this.el, em));
+    if (this.el.lastElementChild?.classList.contains('ae-toolbar__divider')) {
+      this.el.lastElementChild.remove();
+    }
+  }
 
-    this.el.appendChild(createDivider());
-
-    this.el.appendChild(renderBoldButton(this.el, em));
-    this.el.appendChild(renderItalicButton(this.el, em));
-    this.el.appendChild(renderUnderlineButton(this.el, em));
-    this.el.appendChild(renderStrikeButton(this.el, em));
-    this.el.appendChild(renderTextColorButton(this.el, em));
-    this.el.appendChild(renderHighlightButton(this.el, em));
-
-    this.el.appendChild(createDivider());
-
-    this.el.appendChild(renderSuperscriptButton(this.el, em));
-    this.el.appendChild(renderSubscriptButton(this.el, em));
-    this.el.appendChild(renderCodeButton(this.el, em));
-    this.el.appendChild(renderCodeBlockButton(this.el, em));
-
-    this.el.appendChild(createDivider());
-
-    const alignGroup = renderTextAlignButtons(this.el, em);
-    this.el.appendChild(alignGroup);
-
-    this.el.appendChild(createDivider());
-
-    this.el.appendChild(renderBulletListButton(this.el, em));
-    this.el.appendChild(renderOrderedListButton(this.el, em));
-    this.el.appendChild(renderTaskListButton(this.el, em));
-    this.el.appendChild(renderBlockquoteButton(this.el, em));
-
-    this.el.appendChild(createDivider());
-
-    this.el.appendChild(renderLinkButton(this.el, em));
-    this.el.appendChild(renderImageButton(this.el, em));
-    this.el.appendChild(renderTableButton(this.el, em));
-    this.el.appendChild(renderHorizontalRuleButton(this.el, em));
-
-    this.el.appendChild(createDivider());
-
-    this.el.appendChild(renderUndoButton(this.el, em));
-    this.el.appendChild(renderRedoButton(this.el, em));
+  private appendDivider(): void {
+    const d = document.createElement('div');
+    d.classList.add('ae-toolbar__divider');
+    this.el.appendChild(d);
   }
 
   getElement(): HTMLElement {

@@ -28,11 +28,15 @@ export interface ToolbarGroup {
   items: ToolbarItem[];
 }
 
+export type ToolbarRenderFn = (
+  editorManager: any
+) => HTMLElement | HTMLElement[];
+
 export interface EditorPlugin {
   name: string;
-  extension?: TiptapExtension | any;
-  toolbarItems?: ToolbarItem[];
-  onInit?: () => void;
+  extensions?: (TiptapExtension | any)[];
+  renderToolbar?: ToolbarRenderFn;
+  onInit?: (editorManager: any) => void;
   onDestroy?: () => void;
 }
 
@@ -42,6 +46,7 @@ export interface EditorOptions {
   placeholder?: string;
   autofocus?: boolean;
   editable?: boolean;
+  plugins?: EditorPlugin[];
 }
 
 export interface EditorEventMap {

@@ -1,6 +1,7 @@
 import { EditorManager } from '@/core';
+import { PluginRegistry } from '@/core/PluginRegistry';
 import { Toolbar, BubbleMenu } from '@/ui';
-import type { EditorOptions } from '@/types';
+import type { EditorPlugin, EditorOptions } from '@/types';
 import {
   createDocumentPlugin,
   createParagraphPlugin,
@@ -32,11 +33,41 @@ import {
   createFontFamilyPlugin,
   createHistoryPlugin,
   createPlaceholderPlugin,
-  Table,
-  TableRow,
-  TableCell,
-  TableHeader,
+  createTablePlugin,
 } from '@/plugins';
+
+const defaultPlugins: (() => EditorPlugin)[] = [
+  createDocumentPlugin,
+  createParagraphPlugin,
+  createTextPlugin,
+  createListItemPlugin,
+  createTaskItemPlugin,
+  createDropcursorPlugin,
+  createGapcursorPlugin,
+  createBoldPlugin,
+  createItalicPlugin,
+  createUnderlinePlugin,
+  createStrikePlugin,
+  createCodePlugin,
+  createCodeBlockPlugin,
+  createHeadingPlugin,
+  createBulletListPlugin,
+  createOrderedListPlugin,
+  createTaskListPlugin,
+  createBlockquotePlugin,
+  createHorizontalRulePlugin,
+  createLinkPlugin,
+  createImagePlugin,
+  createTextAlignPlugin,
+  createHighlightPlugin,
+  createColorPlugin,
+  createTextColorPlugin,
+  createSuperscriptPlugin,
+  createSubscriptPlugin,
+  createFontFamilyPlugin,
+  createHistoryPlugin,
+  createTablePlugin,
+];
 
 export class AiEditor {
   private editorManager: EditorManager;
@@ -46,6 +77,17 @@ export class AiEditor {
   private wrapper: HTMLElement;
   private statusBar: HTMLElement;
   private wordCountEl: HTMLElement;
+  private resolvedPlugins: EditorPlugin[] = [];
+
+  static use(plugin: EditorPlugin): typeof AiEditor {
+    PluginRegistry.use(plugin);
+    return AiEditor;
+  }
+
+  static useAll(plugins: EditorPlugin[]): typeof AiEditor {
+    PluginRegistry.useAll(plugins);
+    return AiEditor;
+  }
 
   constructor(options: EditorOptions) {
     this.container = options.element;
@@ -60,9 +102,13 @@ export class AiEditor {
       editable: options.editable,
     });
 
-    this.registerPlugins(options.placeholder);
+    this.resolvedPlugins = this.resolvePlugins(options.plugins, options.placeholder);
+    this.registerPlugins();
 
-    this.toolbar = new Toolbar({ editorManager: this.editorManager });
+    this.toolbar = new Toolbar({
+      editorManager: this.editorManager,
+      plugins: this.resolvedPlugins,
+    });
     this.bubbleMenu = new BubbleMenu({ editorManager: this.editorManager });
 
     this.statusBar = document.createElement('div');
@@ -86,54 +132,39 @@ export class AiEditor {
     }
   }
 
-  private registerPlugins(placeholder?: string): void {
+  private resolvePlugins(localPlugins?: EditorPlugin[], placeholder?: string): EditorPlugin[] {
+    const globalPlugins = PluginRegistry.getGlobalPlugins();
+    const defaults = defaultPlugins.map((factory) => factory());
+    defaults.push(createPlaceholderPlugin(placeholder));
+
+    const merged = new Map<string, EditorPlugin>();
+
+    for (const plugin of defaults) {
+      merged.set(plugin.name, plugin);
+    }
+    for (const plugin of globalPlugins) {
+      merged.set(plugin.name, plugin);
+    }
+    if (localPlugins) {
+      for (const plugin of localPlugins) {
+        merged.set(plugin.name, plugin);
+      }
+    }
+
+    return Array.from(merged.values());
+  }
+
+  private registerPlugins(): void {
     const extManager = this.editorManager.getExtensionManager();
-
-    extManager.register(createDocumentPlugin());
-    extManager.register(createParagraphPlugin());
-    extManager.register(createTextPlugin());
-    extManager.register(createListItemPlugin());
-    extManager.register(createTaskItemPlugin());
-    extManager.register(createDropcursorPlugin());
-    extManager.register(createGapcursorPlugin());
-    extManager.register(createBoldPlugin());
-    extManager.register(createItalicPlugin());
-    extManager.register(createUnderlinePlugin());
-    extManager.register(createStrikePlugin());
-    extManager.register(createCodePlugin());
-    extManager.register(createCodeBlockPlugin());
-    extManager.register(createHeadingPlugin());
-    extManager.register(createBulletListPlugin());
-    extManager.register(createOrderedListPlugin());
-    extManager.register(createTaskListPlugin());
-    extManager.register(createBlockquotePlugin());
-    extManager.register(createHorizontalRulePlugin());
-    extManager.register(createLinkPlugin());
-    extManager.register(createImagePlugin());
-    extManager.register(createTextAlignPlugin());
-    extManager.register(createHighlightPlugin());
-    extManager.register(createColorPlugin());
-    extManager.register(createTextColorPlugin());
-    extManager.register(createSuperscriptPlugin());
-    extManager.register(createSubscriptPlugin());
-    extManager.register(createFontFamilyPlugin());
-    extManager.register(createHistoryPlugin());
-    extManager.register(createPlaceholderPlugin(placeholder));
-
-    extManager.register({
-      name: 'table',
-      extension: Table.configure({ resizable: true }),
-    });
-    extManager.register({ name: 'tableRow', extension: TableRow });
-    extManager.register({ name: 'tableCell', extension: TableCell });
-    extManager.register({ name: 'tableHeader', extension: TableHeader });
+    for (const plugin of this.resolvedPlugins) {
+      extManager.register(plugin);
+    }
   }
 
   private setupFocusState(): void {
     this.editorManager.on('focus', () => {
       this.wrapper.classList.add('ae--focused');
     });
-
     this.editorManager.on('blur', () => {
       this.wrapper.classList.remove('ae--focused');
     });
@@ -146,7 +177,6 @@ export class AiEditor {
       const words = text.trim() ? text.trim().split(/\s+/).length : 0;
       this.wordCountEl.textContent = `${words} 字 · ${chars} 字符`;
     };
-
     this.editorManager.on('update', update);
     update();
   }

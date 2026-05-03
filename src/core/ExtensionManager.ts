@@ -6,26 +6,16 @@ export class ExtensionManager {
 
   register(plugin: EditorPlugin): void {
     if (this.plugins.has(plugin.name)) {
-      console.warn(`Plugin "${plugin.name}" is already registered. Skipping.`);
       return;
     }
     this.plugins.set(plugin.name, plugin);
-    if (plugin.extension) {
-      this.extensions.push(plugin.extension);
+    if (plugin.extensions) {
+      this.extensions.push(...plugin.extensions);
     }
   }
 
   unregister(name: string): void {
-    const plugin = this.plugins.get(name);
-    if (plugin) {
-      if (plugin.extension) {
-        this.extensions = this.extensions.filter(
-          (ext) => ext.name !== plugin.extension!.name
-        );
-      }
-      plugin.onDestroy?.();
-      this.plugins.delete(name);
-    }
+    this.plugins.delete(name);
   }
 
   getExtensions(): any[] {
@@ -42,7 +32,7 @@ export class ExtensionManager {
 
   initAll(): void {
     this.plugins.forEach((plugin) => {
-      plugin.onInit?.();
+      plugin.onInit?.(null as any);
     });
   }
 
