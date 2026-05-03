@@ -1,8 +1,8 @@
-import { EditorManager } from '@/core';
-import { PluginRegistry } from '@/core/PluginRegistry';
-import { Toolbar, BubbleMenu } from '@/ui';
-import type { EditorPlugin, EditorOptions } from '@/types';
-import { defaultPlugins, createPlaceholderPlugin } from '@/plugins';
+import { EditorManager } from "@/core";
+import { PluginRegistry } from "@/core/PluginRegistry";
+import { Toolbar, BubbleMenu } from "@/ui";
+import type { EditorPlugin, EditorOptions } from "@/types";
+import { defaultPlugins, createPlaceholderPlugin } from "@/plugins";
 
 export class AiEditor {
   private editorManager: EditorManager;
@@ -26,8 +26,8 @@ export class AiEditor {
 
   constructor(options: EditorOptions) {
     this.container = options.element;
-    this.wrapper = document.createElement('div');
-    this.wrapper.classList.add('ae');
+    this.wrapper = document.createElement("div");
+    this.wrapper.classList.add("ae");
 
     this.editorManager = new EditorManager({
       element: this.wrapper,
@@ -58,9 +58,9 @@ export class AiEditor {
 
     this.bubbleMenu = new BubbleMenu({ editorManager: this.editorManager });
 
-    this.statusBar = document.createElement('div');
-    this.statusBar.classList.add('ae-status-bar');
-    this.wordCountEl = document.createElement('span');
+    this.statusBar = document.createElement("div");
+    this.statusBar.classList.add("ae-status-bar");
+    this.wordCountEl = document.createElement("span");
     this.statusBar.appendChild(this.wordCountEl);
 
     if (this.toolbar) {
@@ -75,8 +75,8 @@ export class AiEditor {
     this.setupWordCount();
 
     if (this.toolbar) {
-      const toolbarEl = this.wrapper.querySelector('.ae-toolbar');
-      const editorEl = this.wrapper.querySelector('.ae-editor__content');
+      const toolbarEl = this.wrapper.querySelector(".ae-toolbar");
+      const editorEl = this.wrapper.querySelector(".ae-editor__content");
       if (toolbarEl && editorEl) {
         this.wrapper.insertBefore(toolbarEl, editorEl);
       }
@@ -135,11 +135,11 @@ export class AiEditor {
   }
 
   private setupFocusState(): void {
-    this.editorManager.on('focus', () => {
-      this.wrapper.classList.add('ae--focused');
+    this.editorManager.on("focus", () => {
+      this.wrapper.classList.add("ae--focused");
     });
-    this.editorManager.on('blur', () => {
-      this.wrapper.classList.remove('ae--focused');
+    this.editorManager.on("blur", () => {
+      this.wrapper.classList.remove("ae--focused");
     });
   }
 
@@ -148,9 +148,9 @@ export class AiEditor {
       const text = this.editorManager.getText();
       const chars = text.length;
       const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-      this.wordCountEl.textContent = this.editorManager.t('status.wordCount', { words, chars });
+      this.wordCountEl.textContent = this.editorManager.t("status.wordCount", { words, chars });
     };
-    this.editorManager.on('update', update);
+    this.editorManager.on("update", update);
     update();
   }
 
