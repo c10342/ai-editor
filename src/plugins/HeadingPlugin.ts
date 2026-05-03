@@ -1,11 +1,17 @@
-import Heading from '@tiptap/extension-heading';
+import Heading, { Level } from '@tiptap/extension-heading';
 import { getIconElement } from '@/icons';
 import type { EditorPlugin } from '@/types';
 
-export function createHeadingPlugin(): EditorPlugin {
+export interface HeadingPluginOptions {
+  levels?: Level[];
+}
+
+export function createHeadingPlugin(options?: HeadingPluginOptions): EditorPlugin {
+  const levels = options?.levels || [1, 2, 3, 4, 5, 6];
+
   return {
     name: 'heading',
-    extensions: [Heading.configure({ levels: [1, 2, 3, 4, 5, 6] })],
+    extensions: [Heading.configure({ levels })],
     renderToolbar(editorManager) {
       const wrapper = document.createElement('div');
       wrapper.classList.add('ae-toolbar__dropdown');
@@ -18,10 +24,7 @@ export function createHeadingPlugin(): EditorPlugin {
       menu.classList.add('ae-toolbar__dropdown-menu');
       const headings = [
         { level: 0, label: '正文', tag: 'p' },
-        { level: 1, label: '标题 1', tag: 'h1' },
-        { level: 2, label: '标题 2', tag: 'h2' },
-        { level: 3, label: '标题 3', tag: 'h3' },
-        { level: 4, label: '标题 4', tag: 'h4' },
+        ...levels.map((l) => ({ level: l, label: `标题 ${l}`, tag: `h${l}` })),
       ];
       headings.forEach(({ level, label, tag }) => {
         const item = document.createElement('div');
@@ -47,8 +50,8 @@ export function createHeadingPlugin(): EditorPlugin {
         const editor = editorManager.getEditor();
         if (!editor) return;
         let currentLabel = '正文';
-        for (let i = 1; i <= 4; i++) {
-          if (editor.isActive('heading', { level: i })) { currentLabel = `标题 ${i}`; break; }
+        for (const l of levels) {
+          if (editor.isActive('heading', { level: l })) { currentLabel = `标题 ${l}`; break; }
         }
         const labelEl = trigger.querySelector('.ae-toolbar__btn-label');
         if (labelEl) labelEl.textContent = currentLabel;

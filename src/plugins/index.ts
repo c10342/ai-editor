@@ -71,7 +71,7 @@ export {
   createGapcursorPlugin,
 };
 
-export const defaultPlugins: (() => EditorPlugin)[] = [
+export const defaultPlugins: ((options?: any) => EditorPlugin)[] = [
   createDocumentPlugin,
   createParagraphPlugin,
   createTextPlugin,

@@ -47,6 +47,8 @@ export interface EditorOptions {
   autofocus?: boolean;
   editable?: boolean;
   plugins?: EditorPlugin[];
+  toolbar?: string[] | false;
+  pluginOptions?: Record<string, any>;
 }
 
 export interface EditorEventMap {

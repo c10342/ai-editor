@@ -6,7 +6,7 @@ import { defaultPlugins, createPlaceholderPlugin } from '@/plugins';
 
 export class AiEditor {
   private editorManager: EditorManager;
-  private toolbar: Toolbar;
+  private toolbar: Toolbar | null;
   private bubbleMenu: BubbleMenu;
   private container: HTMLElement;
   private wrapper: HTMLElement;
@@ -37,13 +37,19 @@ export class AiEditor {
       editable: options.editable,
     });
 
-    this.resolvedPlugins = this.resolvePlugins(options.plugins, options.placeholder);
+    this.resolvedPlugins = this.resolvePlugins(options.plugins, options.placeholder, options.pluginOptions);
     this.registerPlugins();
 
-    this.toolbar = new Toolbar({
-      editorManager: this.editorManager,
-      plugins: this.resolvedPlugins,
-    });
+    const toolbarPlugins = this.filterToolbarPlugins(options.toolbar);
+    if (toolbarPlugins) {
+      this.toolbar = new Toolbar({
+        editorManager: this.editorManager,
+        plugins: toolbarPlugins,
+      });
+    } else {
+      this.toolbar = null;
+    }
+
     this.bubbleMenu = new BubbleMenu({ editorManager: this.editorManager });
 
     this.statusBar = document.createElement('div');
@@ -51,7 +57,9 @@ export class AiEditor {
     this.wordCountEl = document.createElement('span');
     this.statusBar.appendChild(this.wordCountEl);
 
-    this.wrapper.insertBefore(this.toolbar.getElement(), this.wrapper.firstChild);
+    if (this.toolbar) {
+      this.wrapper.insertBefore(this.toolbar.getElement(), this.wrapper.firstChild);
+    }
     this.wrapper.appendChild(this.statusBar);
     this.container.appendChild(this.wrapper);
     document.body.appendChild(this.bubbleMenu.getElement());
@@ -60,16 +68,36 @@ export class AiEditor {
     this.setupFocusState();
     this.setupWordCount();
 
-    const toolbarEl = this.wrapper.querySelector('.ae-toolbar');
-    const editorEl = this.wrapper.querySelector('.ae-editor__content');
-    if (toolbarEl && editorEl) {
-      this.wrapper.insertBefore(toolbarEl, editorEl);
+    if (this.toolbar) {
+      const toolbarEl = this.wrapper.querySelector('.ae-toolbar');
+      const editorEl = this.wrapper.querySelector('.ae-editor__content');
+      if (toolbarEl && editorEl) {
+        this.wrapper.insertBefore(toolbarEl, editorEl);
+      }
     }
   }
 
-  private resolvePlugins(localPlugins?: EditorPlugin[], placeholder?: string): EditorPlugin[] {
+  private filterToolbarPlugins(toolbar?: string[] | false): EditorPlugin[] | null {
+    if (toolbar === false) return null;
+    const withToolbar = this.resolvedPlugins.filter((p) => p.renderToolbar);
+    if (!toolbar) return withToolbar;
+    const set = new Set(toolbar);
+    return withToolbar.filter((p) => set.has(p.name));
+  }
+
+  private resolvePlugins(localPlugins?: EditorPlugin[], placeholder?: string, pluginOptions?: Record<string, any>): EditorPlugin[] {
     const globalPlugins = PluginRegistry.getGlobalPlugins();
-    const defaults = defaultPlugins.map((factory) => factory());
+
+    let defaults: EditorPlugin[];
+    if (pluginOptions && Object.keys(pluginOptions).length > 0) {
+      defaults = defaultPlugins.map((factory) => {
+        const probe = factory();
+        const opts = pluginOptions[probe.name];
+        return opts ? factory(opts) : probe;
+      });
+    } else {
+      defaults = defaultPlugins.map((factory) => factory());
+    }
     defaults.push(createPlaceholderPlugin(placeholder));
 
     const merged = new Map<string, EditorPlugin>();
@@ -138,7 +166,7 @@ export class AiEditor {
 
   destroy(): void {
     this.bubbleMenu.destroy();
-    this.toolbar.destroy();
+    this.toolbar?.destroy();
     this.editorManager.destroy();
     this.wrapper.remove();
   }
