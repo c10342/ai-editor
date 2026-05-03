@@ -1,0 +1,122 @@
+.#{$prefix}-link-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: var(--ae-z-modal-overlay);
+  animation: fadeIn 0.15s ease;
+
+  &__dialog {
+    background-color: var(--ae-color-bg);
+    border-radius: var(--ae-radius-lg);
+    padding: 24px;
+    width: 420px;
+    max-width: 90vw;
+    box-shadow: var(--ae-shadow-xl);
+    z-index: var(--ae-z-modal);
+    animation: slideUp 0.2s ease;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ae-color-text);
+    margin-bottom: 16px;
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--ae-color-border);
+    border-radius: var(--ae-radius-md);
+    font-size: 14px;
+    color: var(--ae-color-text);
+    background-color: var(--ae-color-bg);
+    outline: none;
+    transition: border-color var(--ae-transition-fast);
+    margin-bottom: 12px;
+    font-family: var(--ae-font-family);
+
+    &:focus {
+      border-color: var(--ae-color-primary);
+      box-shadow: 0 0 0 2px rgba(var(--ae-color-primary-rgb), 0.15);
+    }
+
+    &::placeholder {
+      color: var(--ae-color-text-disabled);
+    }
+  }
+
+  &__file-label {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px dashed var(--ae-color-border);
+    border-radius: var(--ae-radius-md);
+    font-size: 13px;
+    color: var(--ae-color-text-secondary);
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: all var(--ae-transition-fast);
+
+    &:hover {
+      border-color: var(--ae-color-primary);
+      color: var(--ae-color-primary);
+    }
+  }
+
+  &__actions {
+    @include flex-between;
+    gap: 8px;
+  }
+
+  &__btn {
+    padding: 6px 16px;
+    border: none;
+    border-radius: var(--ae-radius-md);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all var(--ae-transition-fast);
+    font-family: var(--ae-font-family);
+
+    &--cancel {
+      background-color: var(--ae-color-bg-hover);
+      color: var(--ae-color-text-secondary);
+
+      &:hover {
+        background-color: var(--ae-color-bg-active);
+      }
+    }
+
+    &--confirm {
+      background-color: var(--ae-color-primary);
+      color: #ffffff;
+
+      &:hover {
+        background-color: var(--ae-color-primary-hover);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,37 @@
+.#{$prefix}-bubble-menu {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  background-color: var(--ae-color-text);
+  border-radius: var(--ae-radius-md);
+  box-shadow: var(--ae-shadow-xl);
+  z-index: var(--ae-z-bubble-menu);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: all var(--ae-transition-fast);
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .#{$prefix}-toolbar__btn {
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+
+    &.is-active {
+      background-color: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+  }
+}
