@@ -180,7 +180,8 @@ export default function Editor({ content, lang, onChange }: EditorProps) {
 | 参数            | 类型                                     | 默认值    | 说明                               |
 | --------------- | ---------------------------------------- | --------- | ---------------------------------- |
 | `element`       | `HTMLElement`                            | -         | **必填**，编辑器挂载的 DOM 容器    |
-| `content`       | `string`                                 | `''`      | 初始 HTML 内容                     |
+| `content`       | `string`                                 | `''`      | 初始内容（HTML 或 Markdown）       |
+| `contentType`   | `'html' \| 'markdown'`                   | `'html'`  | 初始内容的格式                     |
 | `placeholder`   | `string`                                 | -         | 占位提示文本                       |
 | `autofocus`     | `boolean`                                | `false`   | 是否自动聚焦                       |
 | `editable`      | `boolean`                                | `true`    | 是否可编辑                         |
@@ -238,6 +239,57 @@ new AiEditor({
 | `fontFamily`     | 字体      |
 | `history`        | 撤销/重做 |
 | `table`          | 表格      |
+| `markdown`       | Markdown  |
+
+## Markdown 支持
+
+编辑器内置 Markdown 支持，可以直接使用 Markdown 格式作为初始内容，也可以随时获取和设置 Markdown 内容。
+
+### 初始内容为 Markdown
+
+```typescript
+new AiEditor({
+  element: el,
+  content: "# Hello\n\nThis is **markdown** content",
+  contentType: "markdown",
+});
+```
+
+### 获取和设置 Markdown
+
+```typescript
+const editor = new AiEditor({ element: el });
+
+// 获取当前内容的 Markdown 表示
+const md = editor.getMarkdown();
+
+// 用 Markdown 设置编辑器内容
+editor.setMarkdown("# New Title\n\nSome **bold** text");
+```
+
+### 粘贴和复制
+
+开启 Markdown 插件后，粘贴 Markdown 文本会自动解析为富文本，复制编辑器内容时会输出 Markdown 格式。
+
+### 自定义 Markdown 配置
+
+通过 `pluginOptions` 调整 Markdown 插件行为：
+
+```typescript
+new AiEditor({
+  element: el,
+  pluginOptions: {
+    markdown: {
+      html: false, // 禁止内嵌 HTML
+      tightLists: false, // 禁用紧凑列表
+      breaks: true, // 换行符转为 <br>
+      linkify: false, // 禁用自动链接识别
+      transformPastedText: false, // 粘贴时不转换 Markdown
+      transformCopiedText: false, // 复制时不输出 Markdown
+    },
+  },
+});
+```
 
 ## 国际化
 
@@ -361,6 +413,8 @@ editor.getHTML(): string;
 editor.setHTML(html: string): void;
 editor.getJSON(): Record<string, any>;
 editor.setJSON(json: Record<string, any>): void;
+editor.getMarkdown(): string;
+editor.setMarkdown(markdown: string): void;
 editor.focus(): void;
 editor.destroy(): void;
 ```
@@ -404,6 +458,7 @@ npx tsc --noEmit
 
 - [@tiptap/core](https://tiptap.dev/) — 编辑器核心
 - 30+ tiptap 扩展（bold、italic、heading、table 等）
+- [tiptap-markdown](https://github.com/aguingand/tiptap-markdown) — Markdown 解析与序列化
 
 ## License
 

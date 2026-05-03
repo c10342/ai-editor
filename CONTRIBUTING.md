@@ -59,6 +59,7 @@ src/
 │   ├── BasePlugins.ts      # 基础插件（document、paragraph、text 等）
 │   ├── BoldPlugin.ts       # 加粗插件
 │   ├── HeadingPlugin.ts    # 标题插件
+│   ├── MarkdownPlugin.ts   # Markdown 插件
 │   ├── TablePlugin.ts      # 表格插件
 │   └── ...                 # 其他功能插件
 ├── ui/                     # UI 层
@@ -365,6 +366,8 @@ export function createTablePlugin(): EditorPlugin {
 | `getI18n()`             | `I18n`             | 获取国际化实例          |
 | `t(key, params?)`       | `string`           | 翻译快捷方法            |
 | `on(event, callback)`   | `() => void`       | 监听事件，返回取消函数  |
+| `getMarkdown()`         | `string`           | 获取当前内容的 Markdown |
+| `setMarkdown(md)`       | `void`             | 设置 Markdown 内容      |
 
 可用事件：
 
