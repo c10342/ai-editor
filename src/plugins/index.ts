@@ -1,27 +1,29 @@
-export { createBoldPlugin } from './BoldPlugin';
-export { createItalicPlugin } from './ItalicPlugin';
-export { createUnderlinePlugin } from './UnderlinePlugin';
-export { createStrikePlugin } from './StrikePlugin';
-export { createCodePlugin } from './CodePlugin';
-export { createCodeBlockPlugin } from './CodeBlockPlugin';
-export { createHeadingPlugin } from './HeadingPlugin';
-export { createBulletListPlugin } from './BulletListPlugin';
-export { createOrderedListPlugin } from './OrderedListPlugin';
-export { createTaskListPlugin } from './TaskListPlugin';
-export { createBlockquotePlugin } from './BlockquotePlugin';
-export { createHorizontalRulePlugin } from './HorizontalRulePlugin';
-export { createLinkPlugin } from './LinkPlugin';
-export { createImagePlugin } from './ImagePlugin';
-export { createTextAlignPlugin } from './TextAlignPlugin';
-export { createHighlightPlugin } from './HighlightPlugin';
-export { createColorPlugin, createTextColorPlugin } from './ColorPlugin';
-export { createSuperscriptPlugin } from './SuperscriptPlugin';
-export { createSubscriptPlugin } from './SubscriptPlugin';
-export { createTablePlugin, Table, TableRow, TableCell, TableHeader } from './TablePlugin';
-export { createFontFamilyPlugin } from './FontFamilyPlugin';
-export { createHistoryPlugin } from './HistoryPlugin';
-export { createPlaceholderPlugin } from './PlaceholderPlugin';
-export {
+import type { EditorPlugin } from '@/types';
+
+import { createBoldPlugin } from './BoldPlugin';
+import { createItalicPlugin } from './ItalicPlugin';
+import { createUnderlinePlugin } from './UnderlinePlugin';
+import { createStrikePlugin } from './StrikePlugin';
+import { createCodePlugin } from './CodePlugin';
+import { createCodeBlockPlugin } from './CodeBlockPlugin';
+import { createHeadingPlugin } from './HeadingPlugin';
+import { createBulletListPlugin } from './BulletListPlugin';
+import { createOrderedListPlugin } from './OrderedListPlugin';
+import { createTaskListPlugin } from './TaskListPlugin';
+import { createBlockquotePlugin } from './BlockquotePlugin';
+import { createHorizontalRulePlugin } from './HorizontalRulePlugin';
+import { createLinkPlugin } from './LinkPlugin';
+import { createImagePlugin } from './ImagePlugin';
+import { createTextAlignPlugin } from './TextAlignPlugin';
+import { createHighlightPlugin } from './HighlightPlugin';
+import { createColorPlugin, createTextColorPlugin } from './ColorPlugin';
+import { createSuperscriptPlugin } from './SuperscriptPlugin';
+import { createSubscriptPlugin } from './SubscriptPlugin';
+import { createTablePlugin, Table, TableRow, TableCell, TableHeader } from './TablePlugin';
+import { createFontFamilyPlugin } from './FontFamilyPlugin';
+import { createHistoryPlugin } from './HistoryPlugin';
+import { createPlaceholderPlugin } from './PlaceholderPlugin';
+import {
   createDocumentPlugin,
   createParagraphPlugin,
   createTextPlugin,
@@ -30,3 +32,74 @@ export {
   createDropcursorPlugin,
   createGapcursorPlugin,
 } from './BasePlugins';
+
+export {
+  createBoldPlugin,
+  createItalicPlugin,
+  createUnderlinePlugin,
+  createStrikePlugin,
+  createCodePlugin,
+  createCodeBlockPlugin,
+  createHeadingPlugin,
+  createBulletListPlugin,
+  createOrderedListPlugin,
+  createTaskListPlugin,
+  createBlockquotePlugin,
+  createHorizontalRulePlugin,
+  createLinkPlugin,
+  createImagePlugin,
+  createTextAlignPlugin,
+  createHighlightPlugin,
+  createColorPlugin,
+  createTextColorPlugin,
+  createSuperscriptPlugin,
+  createSubscriptPlugin,
+  createTablePlugin,
+  Table,
+  TableRow,
+  TableCell,
+  TableHeader,
+  createFontFamilyPlugin,
+  createHistoryPlugin,
+  createPlaceholderPlugin,
+  createDocumentPlugin,
+  createParagraphPlugin,
+  createTextPlugin,
+  createListItemPlugin,
+  createTaskItemPlugin,
+  createDropcursorPlugin,
+  createGapcursorPlugin,
+};
+
+export const defaultPlugins: (() => EditorPlugin)[] = [
+  createDocumentPlugin,
+  createParagraphPlugin,
+  createTextPlugin,
+  createListItemPlugin,
+  createTaskItemPlugin,
+  createDropcursorPlugin,
+  createGapcursorPlugin,
+  createBoldPlugin,
+  createItalicPlugin,
+  createUnderlinePlugin,
+  createStrikePlugin,
+  createCodePlugin,
+  createCodeBlockPlugin,
+  createHeadingPlugin,
+  createBulletListPlugin,
+  createOrderedListPlugin,
+  createTaskListPlugin,
+  createBlockquotePlugin,
+  createHorizontalRulePlugin,
+  createLinkPlugin,
+  createImagePlugin,
+  createTextAlignPlugin,
+  createHighlightPlugin,
+  createColorPlugin,
+  createTextColorPlugin,
+  createSuperscriptPlugin,
+  createSubscriptPlugin,
+  createFontFamilyPlugin,
+  createHistoryPlugin,
+  createTablePlugin,
+];
