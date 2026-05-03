@@ -1,16 +1,16 @@
-import type { Extension } from '@tiptap/core';
+import type { Extension } from "@tiptap/core";
 
 export type TiptapExtension = Extension;
 
-export type Locale = 'zh-CN' | 'en' | 'zh-TW';
+export type Locale = "zh-CN" | "en" | "zh-TW";
 
 export type ToolbarItemType =
-  | 'button'
-  | 'dropdown'
-  | 'color-picker'
-  | 'divider'
-  | 'spacer'
-  | 'group';
+  | "button"
+  | "dropdown"
+  | "color-picker"
+  | "divider"
+  | "spacer"
+  | "group";
 
 export interface ToolbarItem {
   id: string;
@@ -43,6 +43,7 @@ export interface EditorPlugin {
 export interface EditorOptions {
   element: HTMLElement;
   content?: string;
+  contentType?: "html" | "markdown";
   placeholder?: string;
   autofocus?: boolean;
   editable?: boolean;
@@ -55,7 +56,7 @@ export interface EditorOptions {
 
 export interface EditorEventMap {
   update: { editor: any };
-  'selection-update': { editor: any };
+  "selection-update": { editor: any };
   focus: { editor: any };
   blur: { editor: any };
   create: { editor: any };

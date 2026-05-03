@@ -1,8 +1,8 @@
-import { Editor, type Content } from '@tiptap/core';
-import { EventEmitter } from './EventEmitter';
-import { ExtensionManager } from './ExtensionManager';
-import { I18n } from './I18n';
-import type { EditorOptions, EditorEventType, EditorEventCallback, Locale } from '@/types';
+import { Editor, type Content } from "@tiptap/core";
+import { EventEmitter } from "./EventEmitter";
+import { ExtensionManager } from "./ExtensionManager";
+import { I18n } from "./I18n";
+import type { EditorOptions, EditorEventType, EditorEventCallback, Locale } from "@/types";
 
 export class EditorManager {
   private editor: Editor | null = null;
@@ -17,15 +17,15 @@ export class EditorManager {
     this.options = options;
     this.emitter = new EventEmitter();
     this.extensionManager = new ExtensionManager();
-    this.i18n = new I18n(options.lang || 'zh-CN');
+    this.i18n = new I18n(options.lang || "zh-CN");
     if (options.messages) {
       for (const [locale, msgs] of Object.entries(options.messages)) {
         this.i18n.addMessages(locale as Locale, msgs);
       }
     }
     this.containerEl = options.element;
-    this.editorEl = document.createElement('div');
-    this.editorEl.classList.add('ae-editor__content');
+    this.editorEl = document.createElement("div");
+    this.editorEl.classList.add("ae-editor__content");
   }
 
   getExtensionManager(): ExtensionManager {
@@ -64,27 +64,27 @@ export class EditorManager {
     this.editor = new Editor({
       element: this.editorEl,
       extensions,
-      content: content || this.options.content || '',
+      content: content || this.options.content || "",
       editable: this.options.editable !== false,
       autofocus: this.options.autofocus ?? false,
       onUpdate: (props) => {
-        this.emitter.emit('update', props);
+        this.emitter.emit("update", props);
       },
       onSelectionUpdate: (props) => {
-        this.emitter.emit('selection-update', props);
+        this.emitter.emit("selection-update", props);
       },
       onFocus: (props) => {
-        this.emitter.emit('focus', props);
+        this.emitter.emit("focus", props);
       },
       onBlur: (props) => {
-        this.emitter.emit('blur', props);
+        this.emitter.emit("blur", props);
       },
       onCreate: (props) => {
         this.extensionManager.initAll();
-        this.emitter.emit('create', props);
+        this.emitter.emit("create", props);
       },
       onDestroy: (props) => {
-        this.emitter.emit('destroy', props);
+        this.emitter.emit("destroy", props);
       },
     });
   }
@@ -97,7 +97,7 @@ export class EditorManager {
   }
 
   getHTML(): string {
-    return this.editor?.getHTML() || '';
+    return this.editor?.getHTML() || "";
   }
 
   setHTML(html: string): void {
@@ -105,7 +105,7 @@ export class EditorManager {
   }
 
   getText(): string {
-    return this.editor?.getText() || '';
+    return this.editor?.getText() || "";
   }
 
   getJSON(): Record<string, any> {
@@ -118,6 +118,18 @@ export class EditorManager {
 
   isEmpty(): boolean {
     return this.editor?.isEmpty ?? true;
+  }
+
+  getMarkdown(): string {
+    const storage = this.editor?.storage?.markdown;
+    if (storage && typeof storage.getMarkdown === "function") {
+      return storage.getMarkdown();
+    }
+    return "";
+  }
+
+  setMarkdown(markdown: string): void {
+    this.editor?.commands.setContent(markdown);
   }
 
   focus(): void {

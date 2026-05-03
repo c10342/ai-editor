@@ -170,6 +170,14 @@ export class AiEditor {
     this.editorManager.setJSON(json);
   }
 
+  getMarkdown(): string {
+    return this.editorManager.getMarkdown();
+  }
+
+  setMarkdown(markdown: string): void {
+    this.editorManager.setMarkdown(markdown);
+  }
+
   focus(): void {
     this.editorManager.focus();
   }

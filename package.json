@@ -140,5 +140,8 @@
     "typescript": "^5.7.0",
     "typescript-eslint": "^8.59.1",
     "vite": "^6.3.0"
+  },
+  "dependencies": {
+    "tiptap-markdown": "^0.8.10"
   }
 }
