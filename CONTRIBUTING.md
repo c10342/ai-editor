@@ -381,17 +381,74 @@ export function createTablePlugin(): EditorPlugin {
 
 ## 国际化开发
 
+### 语言包结构
+
+语言包使用嵌套对象结构，通过点路径（如 `toolbar.heading.title`）访问。每个语言文件导出一个 `LocaleMessages` 对象：
+
+```typescript
+// src/i18n/zh-CN.ts
+const zhCN: LocaleMessages = {
+  toolbar: {
+    bold: "加粗 (Ctrl+B)",
+    heading: {
+      title: "标题", // t('toolbar.heading.title')
+      paragraph: "正文", // t('toolbar.heading.paragraph')
+      level: "标题 {level}", // t('toolbar.heading.level', { level: 2 })
+    },
+    tableOptions: {
+      insert: "插入表格 (3x3)",
+      deleteCol: "删除列",
+    },
+  },
+  link: {
+    modal: {
+      title: "插入链接", // t('link.modal.title')
+      cancel: "取消",
+    },
+  },
+  status: {
+    wordCount: "{words} 字 · {chars} 字符",
+  },
+};
+```
+
+### 点路径解析规则
+
+`editorManager.t('a.b.c')` 会依次查找 `messages.a.b.c`，如果中间路径不存在或最终值不是字符串则回退到 `zh-CN`，仍找不到则返回 key 本身。
+
 ### 添加新的翻译 key
 
-1. 在三个语言包中同时添加（`src/i18n/zh-CN.ts`、`en.ts`、`zh-TW.ts`）
-2. 使用点分命名空间：`toolbar.xxx`、`xxx.modal.title`、`status.xxx`
-3. 支持插值参数：`'{words} 字 · {chars} 字符'` → `editorManager.t('status.wordCount', { words, chars })`
+1. 在三个语言包中**同时添加**（`src/i18n/zh-CN.ts`、`en.ts`、`zh-TW.ts`）
+2. 按功能模块组织嵌套层级：`toolbar`、`link.modal`、`image.modal`、`status`、`placeholder`
+3. 如果 key 与已有嵌套对象冲突（如 `toolbar.heading` 既是按钮 title 又是一组子项），将 title 放在子对象的 `title` 字段中（如 `toolbar.heading.title`）
+4. 支持插值参数：`'{words} 字 · {chars} 字符'` → `editorManager.t('status.wordCount', { words, chars })`
+
+### 命名规范
+
+| 层级 | 示例                                                 | 说明             |
+| ---- | ---------------------------------------------------- | ---------------- |
+| 一级 | `toolbar`、`link`、`image`、`status`、`placeholder`  | 功能模块         |
+| 二级 | `toolbar.heading`、`link.modal`、`toolbar.textAlign` | 子功能或 UI 组件 |
+| 三级 | `toolbar.heading.title`、`link.modal.cancel`         | 具体文本         |
+
+对于同一功能下既有按钮 title 又有子项的场景，使用不同的二级 key 区分：
+
+```
+toolbar.heading.title         → 按钮提示 "标题"
+toolbar.heading.paragraph     → 下拉项 "正文"
+toolbar.heading.level         → 下拉项 "标题 {level}"
+
+toolbar.table                 → 按钮提示 "插入表格"
+toolbar.tableOptions.insert   → 下拉项 "插入表格 (3x3)"
+toolbar.tableOptions.deleteCol → 下拉项 "删除列"
+```
 
 ### 翻译规范
 
 - 所有面向用户的文本必须通过 `editorManager.t()` 获取
 - 工具栏按钮 `title`、下拉菜单文本、弹窗标题/按钮/占位符、状态栏文本
 - 技术性文本（如 CSS 类名、DOM 属性）不翻译
+- 英文字体名（Arial、Georgia 等）不需要翻译
 
 ---
 
